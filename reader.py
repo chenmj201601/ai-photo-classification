@@ -7,12 +7,16 @@ from image_uitls import transform_img
 
 def load_tagging(tagging_file):
     tree = ET.parse(tagging_file)
-    taggings = tree.findall('Photo')
+    root = tree.getroot()
+    photos_node = root.find('Photos')
     tagging_dict = {}
-    for i, tagging in enumerate(taggings):
-        name = tagging.find('Name').text
-        tag = int(tagging.find('Tagging').text)
-        tagging_dict[name] = {'name': name, 'tag': tag}
+    if photos_node is not None:
+        photo_node_list = photos_node.findall('Photo')
+        for i, tagging in enumerate(photo_node_list):
+            name = tagging.find('Name').text
+            tag = int(tagging.find('Tagging').text)
+            tagging_dict[name] = {'name': name, 'tag': tag}
+
     return tagging_dict
 
 
@@ -38,7 +42,7 @@ def data_loader(data_dir, tagging_file, batch_size=10, mode='train'):
             label = 0
             tagging = tagging_dict.get(name)
             if tagging is not None:
-                label = tagging['tag']
+                label = 1 if tagging['tag'] == 101 else 0
             batch_imgs.append(img)
             batch_labels.append(label)
             if len(batch_imgs) == batch_size:
