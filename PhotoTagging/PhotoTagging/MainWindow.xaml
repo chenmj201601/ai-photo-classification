@@ -1,0 +1,86 @@
+﻿<Window x:Class="PhotoTagging.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PhotoTagging"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Default/Control.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/Default/MainPage.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Name="BtnTag" Header="Tag"></MenuItem>
+                <MenuItem Name="BtnGen" Header="Gen"></MenuItem>
+                <MenuItem Name="BtnGenTrain" Header="Train"></MenuItem>
+                <MenuItem Name="BtnGenValid" Header="Valid"></MenuItem>
+                <MenuItem Name="BtnGenTest" Header="Test"></MenuItem>
+            </Menu>
+            <Border DockPanel.Dock="Bottom" Height="30">
+                <Grid VerticalAlignment="Center" Margin="15,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="TxtPage"  Grid.Column="0" Text="" 
+                               VerticalAlignment="Center"></TextBlock>
+                    <Button Name="BtnFirst"  Grid.Column="1" Content="首页"></Button>
+                    <Button Name="BtnPre" Grid.Column="2" Content="上一页"></Button>
+                    <Button Name="BtnNext" Grid.Column="3" Content="下一页"></Button>
+                    <Button Name="BtnLast" Grid.Column="4" Content="尾页"></Button>
+                    <TextBox Name="TxtSkip" Grid.Column="5" Height="25" 
+                             Text="1"
+                             VerticalAlignment="Center" 
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"></TextBox>
+                    <Button Name="BtnSkip" Grid.Column="6" Content="Go"></Button>
+                </Grid>
+            </Border>
+            <ListBox Name="ListBoxPhotos" Style="{DynamicResource ListBoxPhotoStyle}"
+                     SelectionMode="Multiple"
+                     ItemContainerStyle="{DynamicResource ListBoxItemPhotoStyle}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="ListBoxItem">
+                        <Border Width="100" Height="120"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource SystemBrush7}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Source="{Binding Icon}" Stretch ="Uniform"></Image>
+                                <!--<TextBlock Grid.Row="1"  Text="{Binding Name}"></TextBlock>-->
+                            </Grid>
+                            <Border.ToolTip>
+                                <ToolTip>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Row="0" Source="{Binding Path}" Stretch ="Uniform"
+                                               MaxWidth="800" MaxHeight="800"></Image>
+                                        <TextBlock Grid.Row="1"  Text="{Binding Name}"></TextBlock>
+                                    </Grid>
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Grid>
+</Window>
