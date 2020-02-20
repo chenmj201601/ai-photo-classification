@@ -1,12 +1,31 @@
 import datetime
 import paddle.fluid as fluid
 import numpy as np
+import argparse
 from reader import data_loader
 from figure_utils import draw_figure
 from vggnet import VGG
 
-NUM_EPOCH = 30
-BATCH_SIZE = 20
+
+def parse_args():
+    parser = argparse.ArgumentParser("Training Parameters")
+    parser.add_argument(
+        '--num_epoch',
+        type=int,
+        default=30,
+        help='the epoch num')
+    parser.add_argument(
+        '--batch_size',
+        type=int,
+        default=20,
+        help='the batch size')
+    args = parser.parse_args()
+    return args
+
+
+args = parse_args()
+NUM_EPOCH = args.num_epoch
+BATCH_SIZE = args.batch_size
 
 
 def train(model, train_dir, valid_dir, tagging_file):
